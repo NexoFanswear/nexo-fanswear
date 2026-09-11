@@ -1128,6 +1128,19 @@
 <a class="whatsapp" href="#contacto" aria-label="WhatsApp">
   ☎
 </a>
+<script>
+document.querySelectorAll('.product').forEach(product => {
+    const button = product.querySelector('.btn');
+    const team = product.querySelector('h3')?.textContent.trim();
+    const details = product.querySelector('p')?.textContent.trim();
 
+    if (button && team && details) {
+        const message = `Hola 👋 Estoy interesado en la camiseta ${team} - ${details}. ¿Qué tallas tienen disponibles?`;
+        button.href = `https://wa.me/50684197764?text=${encodeURIComponent(message)}`;
+        button.target = '_blank';
+        button.rel = 'noopener';
+    }
+});
+</script>
 </body>
 </html>
