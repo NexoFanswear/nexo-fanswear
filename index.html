@@ -1168,5 +1168,17 @@ Estoy interesado en esta camiseta:
     }
 });
 </script>
+<script>
+document.querySelector('.whatsapp').addEventListener('click', function(e) {
+    e.preventDefault();
+
+    const message = `Hola 👋 Nexo Fanswear.
+
+Me gustaría conocer las camisetas disponibles y recibir información sobre tallas, precios y envíos a todo Costa Rica. ⚽👕`;
+
+    window.location.href =
+        'https://wa.me/50684197764?text=' + encodeURIComponent(message);
+});
+</script> 
 </body>
 </html>
