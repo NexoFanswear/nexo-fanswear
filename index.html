@@ -1137,7 +1137,19 @@ document.querySelectorAll('.product').forEach(product => {
     const details = product.querySelector('p')?.textContent.trim();
 
     if (button && team && details) {
-        const message = `Hola 👋 Estoy interesado en la camiseta ${team} - ${details}. ¿Qué tallas tienen disponibles?`;
+       const message = `Hola 👋 Nexo Fanswear.
+
+Estoy interesado en esta camiseta:
+
+👕 ${team} – ${details}
+
+¿Me podrían confirmar por favor:
+📏 Tallas disponibles
+💰 Precio
+📦 Envío a todo Costa Rica
+💳 Formas de pago?
+
+¡Gracias! ⚽🔥`; 
         button.href = `https://wa.me/50684197764?text=${encodeURIComponent(message)}`;
         button.target = '_blank';
         button.rel = 'noopener';
