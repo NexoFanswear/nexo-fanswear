@@ -1131,13 +1131,15 @@
 </svg>
 </a>
 <script>
-document.querySelectorAll('.product').forEach(product => {
-    const button = product.querySelector('.btn');
-    const team = product.querySelector('h3')?.textContent.trim();
-    const details = product.querySelector('p')?.textContent.trim();
+document.querySelectorAll('.product .btn').forEach(button => {
+    button.addEventListener('click', function(e) {
+        e.preventDefault();
 
-    if (button && team && details) {
-const message = `Hola 👋 Nexo Fanswear.
+        const product = this.closest('.product');
+        const team = product.querySelector('h3').textContent.trim();
+        const details = product.querySelector('p').textContent.trim();
+
+        const message = `Hola 👋 Nexo Fanswear.
 
 Estoy interesado en esta camiseta:
 
@@ -1151,13 +1153,11 @@ Estoy interesado en esta camiseta:
 
 ¡Gracias! ⚽🔥`;
 
-        button.href = `https://wa.me/50684197764?text=${encodeURIComponent(message)}`;
-        button.target = '_blank';
-        button.rel = 'noopener';
-    }
+        window.location.href =
+            'https://wa.me/50684197764?text=' + encodeURIComponent(message);
+    });
 });
 </script>
-<script>
 document.querySelector('.whatsapp').addEventListener('click', function(e) {
     e.preventDefault();
 
