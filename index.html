@@ -1548,11 +1548,54 @@ const textos=producto.innerText
 .filter(Boolean);
 
 const precio=textos.find(t=>t.includes("₡"));
+const extrasNexo=[
+"01_01_real_madrid_mbappe_10_blanca.png",
+"01_02_real_madrid_vini_7_blanca.png",
+"01_03_real_madrid_bellingham_5_blanca.png",
+"01_04_real_madrid_mbappe_10_verde.png",
+"01_05_barcelona_yamal_10_local.png",
+"",
+"02_01_barcelona_yamal_10_negra.png",
+"02_02_liverpool_salah_11.png",
+"02_03_arsenal_saka_7.png",
+"02_04_arsenal_odegaard_8.png",
+"02_05_man_united_fernandes_8.png",
+"02_06_man_city_haaland_9.png",
+"03_01_man_city_haaland_9_negra.png",
+"03_02_chelsea_palmer_10.png",
+"03_03_psg_dembele_10.png",
+"03_04_francia_mbappe_10.png",
+"03_05_bayern_kane_9_roja.png",
+"03_06_bayern_musiala_10_roja.png",
+"04_01_bayern_kane_9_blanca.png",
+"04_02_alemania_musiala_10.png",
+"04_03_juventus_yildiz_10.png",
+"04_04_ac_milan_leao_10.png",
+"04_05_inter_lautaro_10.png",
+"04_06_boca_paredes_5.png",
+"05_01_boca_maradona_10_retro.png",
+"05_02_river_driussi_15.png",
+"05_03_argentina_messi_10.png",
+"05_04_brasil_messi_10_negra.png",
+"05_05_brasil_vini_7_amarilla.png",
+"05_06_brasil_vini_7_oscura.png",
+"06_01_portugal_ronaldo_7_roja.png",
+"06_02_portugal_ronaldo_7_negra.png",
+"06_03_colombia_luis_diaz_7.png",
+"06_04_espana_yamal_10.png"
+];
 
+const indice=Array.from(document.querySelectorAll(".product")).indexOf(producto);
+
+let galeria=producto.dataset.gallery || "";
+
+if(!galeria && imagen && extrasNexo[indice]){
+galeria=imagen.getAttribute("src")+"|"+extrasNexo[indice];
+}
 abrirNexo({
 
 imagen:imagen?imagen.src:"",
-galeria:producto.dataset.gallery || "",
+galeria:galeria,
 nombre:titulo?
 titulo.textContent.trim():
 "Camiseta Nexo Fanswear",
