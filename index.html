@@ -1397,6 +1397,9 @@ document.getElementById("nexoDetalle").textContent=producto.detalle;
 
 document.getElementById("nexoPrecio").textContent=producto.precio;
 
+if(producto.galeria){
+nexoFotos=producto.galeria.split("|");
+}else{
 nexoFotos=[producto.imagen];
 
 const base=producto.imagen.replace(/\.[^/.]+$/,"");
@@ -1424,7 +1427,7 @@ actualizarGaleriaNexo();
 img.src=base+nombre;
 
 });
-
+}
 nexoFotoActual=0;
 
 actualizarGaleriaNexo();
