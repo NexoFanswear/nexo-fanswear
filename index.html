@@ -1130,31 +1130,7 @@
 </a>
 <script>
 document.querySelectorAll('.product .btn').forEach(button => {
-    button.addEventListener('click', function(e) {
-        e.preventDefault();
 
-        const product = this.closest('.product');
-        const team = product.querySelector('h3').textContent.trim();
-        const details = product.querySelector('p').textContent.trim();
-
-        const message = `Hola 👋 Nexo Fanswear.
-
-Estoy interesado en esta camiseta:
-
-👕 ${team} – ${details}
-
-¿Me podrían confirmar por favor:
-📏 Tallas disponibles
-💰 Precio
-📦 Envío a todo Costa Rica
-💳 Formas de pago?
-
-¡Gracias! ⚽🔥`;
-
-        window.location.href =
-            'https://wa.me/50671885497?text=' + encodeURIComponent(message);
-    });
-});
 </script>
   <script>
   document.querySelector('.whatsapp').addEventListener('click', function(e) {
