@@ -1168,5 +1168,73 @@ Me gustaría conocer las camisetas disponibles y recibir información sobre tall
         'https://wa.me/50671885497?text=' + encodeURIComponent(message);
 });
 </script> 
+  <style>
+.nexo-modal{display:none;position:fixed;z-index:9999;inset:0;background:rgba(0,0,0,.9);align-items:center;justify-content:center;padding:15px}
+.nexo-box{width:100%;max-width:480px;max-height:92vh;overflow:auto;background:#111;border:1px solid #d4af37;border-radius:18px;padding:20px;color:#fff;position:relative}
+.nexo-close{position:absolute;right:12px;top:8px;background:none;border:0;color:#fff;font-size:30px}
+.nexo-img{width:100%;max-height:420px;object-fit:contain;border-radius:12px;background:#050505}
+.nexo-box h2{margin:15px 0 5px}
+.nexo-price{color:#d4af37;font-size:24px;font-weight:bold;margin:10px 0}
+.nexo-sizes{display:flex;gap:8px;margin:10px 0 20px}
+.nexo-size{border:1px solid #777;padding:9px 14px;border-radius:8px;background:#222}
+.nexo-wa{display:block;text-align:center;background:#d4af37;color:#000;text-decoration:none;font-weight:bold;padding:14px;border-radius:10px}
+</style>
+
+<div id="nexoModal" class="nexo-modal">
+<div class="nexo-box">
+<button class="nexo-close" onclick="cerrarNexo()">×</button>
+<img id="nexoImg" class="nexo-img" src="" alt="Camiseta Nexo Fanswear">
+<h2 id="nexoNombre"></h2>
+<div id="nexoPrecio" class="nexo-price"></div>
+<strong>Tallas disponibles</strong>
+<div class="nexo-sizes">
+<span class="nexo-size">S</span>
+<span class="nexo-size">M</span>
+<span class="nexo-size">L</span>
+<span class="nexo-size">XL</span>
+</div>
+<p>📦 Envíos a todo Costa Rica</p>
+<p>🟢 Consultá disponibilidad</p>
+<a id="nexoWA" class="nexo-wa" href="#" target="_blank">💬 CONSULTAR POR WHATSAPP</a>
+</div>
+</div>
+
+<script>
+function abrirNexo(producto){
+document.getElementById("nexoImg").src=producto.imagen;
+document.getElementById("nexoNombre").textContent=producto.nombre;
+document.getElementById("nexoPrecio").textContent=producto.precio;
+
+const mensaje="Hola 👋 Nexo Fanswear. Me interesa la camiseta "+producto.nombre+". ¿Me pueden confirmar disponibilidad y tallas?";
+document.getElementById("nexoWA").href="https://wa.me/50671885497?text="+encodeURIComponent(mensaje);
+
+document.getElementById("nexoModal").style.display="flex";
+}
+
+function cerrarNexo(){
+document.getElementById("nexoModal").style.display="none";
+}
+
+document.addEventListener("click",function(e){
+const boton=e.target.closest(".product a, .product button");
+if(!boton)return;
+
+const producto=boton.closest(".product");
+if(!producto)return;
+
+e.preventDefault();
+
+const imagen=producto.querySelector("img");
+const titulo=producto.querySelector("h3");
+const textos=producto.innerText.split("\n").map(t=>t.trim()).filter(Boolean);
+const precio=textos.find(t=>t.includes("₡"));
+
+abrirNexo({
+imagen:imagen?imagen.src:"",
+nombre:titulo?titulo.textContent.trim():"Camiseta Nexo Fanswear",
+precio:precio||"Consultar precio"
+});
+});
+</script>
 </body>
 </html>
