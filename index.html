@@ -1168,73 +1168,438 @@ Me gustaría conocer las camisetas disponibles y recibir información sobre tall
         'https://wa.me/50671885497?text=' + encodeURIComponent(message);
 });
 </script> 
-  <style>
-.nexo-modal{display:none;position:fixed;z-index:9999;inset:0;background:rgba(0,0,0,.9);align-items:center;justify-content:center;padding:15px}
-.nexo-box{width:100%;max-width:480px;max-height:92vh;overflow:auto;background:#111;border:1px solid #d4af37;border-radius:18px;padding:20px;color:#fff;position:relative}
-.nexo-close{position:absolute;right:12px;top:8px;background:none;border:0;color:#fff;font-size:30px}
-.nexo-img{width:100%;max-height:420px;object-fit:contain;border-radius:12px;background:#050505}
-.nexo-box h2{margin:15px 0 5px}
-.nexo-price{color:#d4af37;font-size:24px;font-weight:bold;margin:10px 0}
-.nexo-sizes{display:flex;gap:8px;margin:10px 0 20px}
-.nexo-size{border:1px solid #777;padding:9px 14px;border-radius:8px;background:#222}
-.nexo-wa{display:block;text-align:center;background:#d4af37;color:#000;text-decoration:none;font-weight:bold;padding:14px;border-radius:10px}
+ <style>
+.nexo-modal{
+display:none;
+position:fixed;
+z-index:9999;
+inset:0;
+background:rgba(0,0,0,.92);
+align-items:center;
+justify-content:center;
+padding:12px;
+}
+
+.nexo-box{
+width:100%;
+max-width:520px;
+max-height:94vh;
+overflow:auto;
+background:#111;
+border:1px solid #d4af37;
+border-radius:18px;
+padding:18px;
+color:#fff;
+position:relative;
+box-shadow:0 10px 40px rgba(0,0,0,.7);
+}
+
+.nexo-close{
+position:absolute;
+right:10px;
+top:7px;
+z-index:5;
+width:40px;
+height:40px;
+border:0;
+border-radius:50%;
+background:rgba(0,0,0,.75);
+color:#fff;
+font-size:28px;
+line-height:40px;
+cursor:pointer;
+}
+
+.nexo-gallery{
+position:relative;
+width:100%;
+background:#050505;
+border-radius:14px;
+overflow:hidden;
+}
+
+.nexo-img{
+display:block;
+width:100%;
+height:420px;
+object-fit:contain;
+cursor:zoom-in;
+}
+
+.nexo-prev,
+.nexo-next{
+position:absolute;
+top:50%;
+transform:translateY(-50%);
+width:42px;
+height:42px;
+border:0;
+border-radius:50%;
+background:rgba(0,0,0,.65);
+color:#fff;
+font-size:26px;
+cursor:pointer;
+z-index:3;
+}
+
+.nexo-prev{left:10px}
+.nexo-next{right:10px}
+
+.nexo-counter{
+position:absolute;
+bottom:10px;
+left:50%;
+transform:translateX(-50%);
+background:rgba(0,0,0,.7);
+padding:5px 10px;
+border-radius:20px;
+font-size:12px;
+}
+
+.nexo-thumbs{
+display:flex;
+gap:8px;
+overflow-x:auto;
+padding:10px 0 4px;
+}
+
+.nexo-thumb{
+width:64px;
+height:64px;
+flex:0 0 64px;
+object-fit:cover;
+border-radius:8px;
+border:1px solid #555;
+background:#050505;
+cursor:pointer;
+}
+
+.nexo-thumb.activa{
+border:2px solid #d4af37;
+}
+
+.nexo-box h2{
+margin:15px 0 4px;
+font-size:23px;
+}
+
+.nexo-subtitulo{
+color:#ccc;
+font-size:15px;
+margin-bottom:8px;
+}
+
+.nexo-price{
+color:#d4af37;
+font-size:25px;
+font-weight:bold;
+margin:10px 0 15px;
+}
+
+.nexo-label{
+font-weight:bold;
+margin-bottom:8px;
+display:block;
+}
+
+.nexo-sizes{
+display:flex;
+gap:8px;
+margin:8px 0 18px;
+flex-wrap:wrap;
+}
+
+.nexo-size{
+border:1px solid #777;
+padding:8px 14px;
+border-radius:8px;
+background:#222;
+}
+
+.nexo-info{
+color:#ddd;
+font-size:14px;
+line-height:1.5;
+}
+
+.nexo-wa{
+display:block;
+text-align:center;
+background:#d4af37;
+color:#000;
+text-decoration:none;
+font-weight:bold;
+padding:14px;
+border-radius:10px;
+margin-top:18px;
+}
+
+@media(max-width:600px){
+.nexo-box{
+padding:14px;
+max-height:96vh;
+}
+
+.nexo-img{
+height:360px;
+}
+
+.nexo-box h2{
+font-size:21px;
+}
+}
 </style>
 
 <div id="nexoModal" class="nexo-modal">
+
 <div class="nexo-box">
+
 <button class="nexo-close" onclick="cerrarNexo()">×</button>
-<img id="nexoImg" class="nexo-img" src="" alt="Camiseta Nexo Fanswear">
+
+<div class="nexo-gallery">
+
+<img id="nexoImg"
+class="nexo-img"
+src=""
+alt="Camiseta Nexo Fanswear"
+onclick="abrirZoomNexo()">
+
+<button id="nexoPrev" class="nexo-prev" onclick="cambiarFotoNexo(-1)">‹</button>
+
+<button id="nexoNext" class="nexo-next" onclick="cambiarFotoNexo(1)">›</button>
+
+<div id="nexoCounter" class="nexo-counter"></div>
+
+</div>
+
+<div id="nexoThumbs" class="nexo-thumbs"></div>
+
 <h2 id="nexoNombre"></h2>
+
+<div id="nexoDetalle" class="nexo-subtitulo"></div>
+
 <div id="nexoPrecio" class="nexo-price"></div>
-<strong>Tallas disponibles</strong>
+
+<span class="nexo-label">Tallas disponibles</span>
+
 <div class="nexo-sizes">
 <span class="nexo-size">S</span>
 <span class="nexo-size">M</span>
 <span class="nexo-size">L</span>
 <span class="nexo-size">XL</span>
 </div>
-<p>📦 Envíos a todo Costa Rica</p>
-<p>🟢 Consultá disponibilidad</p>
-<a id="nexoWA" class="nexo-wa" href="#" target="_blank">💬 CONSULTAR POR WHATSAPP</a>
+
+<div class="nexo-info">
+🚚 Envíos a todo Costa Rica<br>
+🟢 Consultá disponibilidad antes de comprar
+</div>
+
+<a id="nexoWA"
+class="nexo-wa"
+href="#"
+target="_blank">
+💬 CONSULTAR POR WHATSAPP
+</a>
+
 </div>
 </div>
 
 <script>
+
+let nexoFotos=[];
+let nexoFotoActual=0;
+
 function abrirNexo(producto){
-document.getElementById("nexoImg").src=producto.imagen;
+
 document.getElementById("nexoNombre").textContent=producto.nombre;
+
+document.getElementById("nexoDetalle").textContent=producto.detalle;
+
 document.getElementById("nexoPrecio").textContent=producto.precio;
 
-const mensaje="Hola 👋 Nexo Fanswear. Me interesa la camiseta "+producto.nombre+". ¿Me pueden confirmar disponibilidad y tallas?";
-document.getElementById("nexoWA").href="https://wa.me/50671885497?text="+encodeURIComponent(mensaje);
+nexoFotos=[producto.imagen];
+
+const base=producto.imagen.replace(/\.[^/.]+$/,"");
+
+const extensiones=[
+"-back.jpg",
+"-espalda.jpg",
+"-detail.jpg",
+"-detalle.jpg"
+];
+
+extensiones.forEach(function(nombre){
+
+const img=new Image();
+
+img.onload=function(){
+
+if(!nexoFotos.includes(img.src)){
+nexoFotos.push(img.src);
+actualizarGaleriaNexo();
+}
+
+};
+
+img.src=base+nombre;
+
+});
+
+nexoFotoActual=0;
+
+actualizarGaleriaNexo();
+
+const mensaje=
+"Hola 👋 Nexo Fanswear. Me interesa la camiseta "+
+producto.nombre+
+" "+producto.detalle+
+". ¿Me pueden confirmar disponibilidad y tallas?";
+
+document.getElementById("nexoWA").href=
+"https://wa.me/50671885497?text="+
+encodeURIComponent(mensaje);
 
 document.getElementById("nexoModal").style.display="flex";
+
+document.body.style.overflow="hidden";
+}
+
+function actualizarGaleriaNexo(){
+
+const imagen=document.getElementById("nexoImg");
+
+imagen.src=nexoFotos[nexoFotoActual];
+
+const thumbs=document.getElementById("nexoThumbs");
+
+thumbs.innerHTML="";
+
+nexoFotos.forEach(function(foto,index){
+
+const mini=document.createElement("img");
+
+mini.src=foto;
+
+mini.className=
+"nexo-thumb"+
+(index===nexoFotoActual?" activa":"");
+
+mini.onclick=function(){
+
+nexoFotoActual=index;
+
+actualizarGaleriaNexo();
+
+};
+
+thumbs.appendChild(mini);
+
+});
+
+document.getElementById("nexoCounter").textContent=
+(nexoFotoActual+1)+" / "+nexoFotos.length;
+
+document.getElementById("nexoPrev").style.display=
+nexoFotos.length>1?"block":"none";
+
+document.getElementById("nexoNext").style.display=
+nexoFotos.length>1?"block":"none";
+}
+
+function cambiarFotoNexo(direccion){
+
+if(nexoFotos.length<=1)return;
+
+nexoFotoActual+=direccion;
+
+if(nexoFotoActual<0){
+nexoFotoActual=nexoFotos.length-1;
+}
+
+if(nexoFotoActual>=nexoFotos.length){
+nexoFotoActual=0;
+}
+
+actualizarGaleriaNexo();
 }
 
 function cerrarNexo(){
+
 document.getElementById("nexoModal").style.display="none";
+
+document.body.style.overflow="";
+
+}
+
+function abrirZoomNexo(){
+
+const foto=nexoFotos[nexoFotoActual];
+
+if(foto){
+window.open(foto,"_blank");
+}
+
 }
 
 document.addEventListener("click",function(e){
+
 const boton=e.target.closest(".product a, .product button");
+
 if(!boton)return;
 
 const producto=boton.closest(".product");
+
 if(!producto)return;
 
 e.preventDefault();
 
 const imagen=producto.querySelector("img");
+
 const titulo=producto.querySelector("h3");
-const textos=producto.innerText.split("\n").map(t=>t.trim()).filter(Boolean);
+
+const detalleElemento=producto.querySelector("p");
+
+const textos=producto.innerText
+.split("\n")
+.map(t=>t.trim())
+.filter(Boolean);
+
 const precio=textos.find(t=>t.includes("₡"));
 
 abrirNexo({
+
 imagen:imagen?imagen.src:"",
-nombre:titulo?titulo.textContent.trim():"Camiseta Nexo Fanswear",
-precio:precio||"Consultar precio"
+
+nombre:titulo?
+titulo.textContent.trim():
+"Camiseta Nexo Fanswear",
+
+detalle:detalleElemento?
+detalleElemento.textContent.trim():"",
+
+precio:precio||
+"Consultar precio"
+
 });
+
 });
-</script>
+
+document.getElementById("nexoModal").addEventListener("click",function(e){
+
+if(e.target===this){
+cerrarNexo();
+}
+
+});
+
+document.addEventListener("keydown",function(e){
+
+if(e.key==="Escape"){
+cerrarNexo();
+}
+
+});
+
+</script> 
 </body>
 </html>
