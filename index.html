@@ -1397,37 +1397,13 @@ document.getElementById("nexoDetalle").textContent=producto.detalle;
 
 document.getElementById("nexoPrecio").textContent=producto.precio;
 
+
 if(producto.galeria){
 nexoFotos=producto.galeria.split("|");
 }else{
 nexoFotos=[producto.imagen];
-
-const base=producto.imagen.replace(/\.[^/.]+$/,"");
-
-const extensiones=[
-"-back.jpg",
-"-espalda.jpg",
-"-detail.jpg",
-"-detalle.jpg"
-];
-
-extensiones.forEach(function(nombre){
-
-const img=new Image();
-
-img.onload=function(){
-
-if(!nexoFotos.includes(img.src)){
-nexoFotos.push(img.src);
-actualizarGaleriaNexo();
 }
 
-};
-
-img.src=base+nombre;
-
-});
-}
 nexoFotoActual=0;
 
 actualizarGaleriaNexo();
